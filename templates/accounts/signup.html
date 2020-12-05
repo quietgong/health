@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="js sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers" lang="ko">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Emsys</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+<!-- faq_area_Start -->
+<div class="faq_area login-format" >
+    <div class="container create-account-container">
+        <div class="row login-row create-account-row" >
+            <div class="col-xl-12 login-col">
+                <div class="serction_title_large mb-95 login-text">
+                    <h3>
+                        계정 신청
+                    </h3>
+                </div>
+                <p class="sample-text reset-password-font"><i class="fa fa-check"><strong> 관리자의 승인을 받은 뒤, 로그인이 가능합니다.</strong> </i></p>
+                <p class="sample-text reset-password-font"><i class="fa fa-check"><strong> ID는 [학번][이름]으로 통일해주세요. ex) 17홍길동</strong> </i></p>
+
+                <form method="post" class="post-form" >
+                    <div class="mt-10">
+                        {% csrf_token %}
+                        {% include 'form_errors_signup.html' %}
+                        <input type="text" id="idvalue" name="username" placeholder="아이디" class="single-input input-id create-id">
+                    </div>
+                    <div class="mt-10">
+                        <input type="text" id="stdnumval" name="first_name" placeholder="학번" class="single-input input-id create-stdnum">
+                    </div>
+                    <div class="mt-10">
+                        <input type="email" id="emailval" name="email" placeholder="이메일(비밀번호 찾기용도)" class="single-input input-id create-email">
+                    </div>
+                    <div class="mt-10">
+                        <input type="password" id="pwd1" name="password1" placeholder="비밀번호" class="single-input input-pwd create-pwd">
+                    </div>
+                    <div class="mt-10">
+                        <input type="password" id="pwd2" name="password2" placeholder="비밀번호 확인" class="single-input input-pwd create-pwd2">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary create-btn create-account-btn">신청</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

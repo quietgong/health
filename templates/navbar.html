@@ -1,5 +1,19 @@
 {% load static %}
 <section id="services">
+  <div id="topbar" class="d-none d-lg-flex align-items-end fixed-top topbar-transparent">
+    <div class="container d-flex justify-content-end">
+      <div class="social-links">
+        {% if user.is_authenticated %}
+        <a href="{% url 'accounts:change_password'%}" class=""><i class="">내계정({{user.username}})</i></a>
+        <a href="{% url 'accounts:logout'%}" class=""><i class="">로그아웃</i></a>
+        {% else %}
+        <a href="{% url 'accounts:login'%}" class=""><i class="">로그인</i></a>
+        <a href="{% url 'accounts:signup'%}" class=""><i class="">회원가입</i></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
   <header id="header" class="fixed-top header-transparent">
     <div class="container d-flex align-items-center">
       <h1 class="logo mr-auto"><a href="{% url 'index' %}">Health Fitness</a></h1>
