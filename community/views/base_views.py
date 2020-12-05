@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
 from ..models import Post
 
-#@login_required(login_url='accounts:login')
+@login_required(login_url='accounts:login')
 def list(request):
     """
     community 목록 출력
