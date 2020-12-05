@@ -4,30 +4,90 @@
  <!-- ======= About Section ======= -->
     <section id="about" class="about">
 
+ <!-- ======= Team Section ======= -->
+    <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
+        <div class="section-header">
+          <h3>Team</h3>
+          <p>Our team consists of three members of the software department.</p>
+        </div>
+
         <div class="row">
 
-          <div class="col-lg-5 col-md-6">
-            <div class="about-img" data-aos="fade-right" data-aos-delay="100">
-              <img src=" {% static 'assets/img/about-img.jpg' %}" alt="' %}">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="member">
+              <img src="static/assets/img/team-1.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Oh Jun-ho</h4>
+                  <span>PL(Project Leader)</span>
+                  <div class="social">
+                    <span>Design</span>
+                    <span>DB Implementation</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-7 col-md-6">
-            <div class="about-content" data-aos="fade-left" data-aos-delay="100">
-              <h2>About Us</h2>
-              <h3>Odio sed id eos et laboriosam consequatur eos earum soluta.</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <p>Aut dolor id. Sint aliquam consequatur ex ex labore. Et quis qui dolor nulla dolores neque. Aspernatur consectetur omnis numquam quaerat. Sed fugiat nisi. Officiis veniam molestiae. Et vel ut quidem alias veritatis repudiandae ut fugit. Est ut eligendi aspernatur nulla voluptates veniam iusto vel quisquam. Fugit ut maxime incidunt accusantium totam repellendus eum error. Et repudiandae eum iste qui et ut ab alias.</p>
-              <ul>
-                <li><i class="ion-android-checkmark-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                <li><i class="ion-android-checkmark-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                <li><i class="ion-android-checkmark-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
-              </ul>
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="member">
+              <img src="static/assets/img/team-2.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Jung Chae-eun</h4>
+                  <span>PM(Product Manager)</span>
+                  <div class="social">
+                    <span>Manage the Github</span>
+                    <span>DB Implementation</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+              <img src="static/assets/img/team-3.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Kim Sun-hyeong</h4>
+                  <span>CTO(Chief Technical Officer)</span>
+                  <div class="social">
+                    <span>Account Management</span>
+                    <span>DB Implementation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
+
       </div>
+    </section><!-- End Team Section -->
+
+    <!-- ======= OpenSource Section ======= -->
+    <section id="clients" class="clients">
+      <div class="container" data-aos="zoom-in">
+
+        <header class="section-header">
+          <h3>Open Source</h3>
+        </header>
+
+        <div class="owl-carousel clients-carousel">
+          <img src="static/assets/img/clients/client-1.png" alt="" height="200">
+          <img src="static/assets/img/clients/client-2.png" alt="" height="200">
+          <img src="static/assets/img/clients/client-3.png" alt="" height="200">
+          <img src="static/assets/img/clients/client-4.png" alt="" height="200">
+          <img src="static/assets/img/clients/client-5.png" alt="" height="200">
+          <img src="static/assets/img/clients/client-6.png" alt="" height="200">
+          <img src="static/assets/img/clients/client-7.png" alt="" height="200">
+        </div>
+
+      </div>
+    </section><!-- End OpenSource Section -->
 
     </section><!-- End About Section -->
 {% endblock %}
