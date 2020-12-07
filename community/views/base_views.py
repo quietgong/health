@@ -48,3 +48,17 @@ def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     context = {'post': post}
     return render(request, 'community/post_detail.html', context)
+
+@login_required(login_url='accounts:login')
+def mypost(request):
+    page = request.GET.get('page', '1')  # 페이지
+    mypost = Post.objects.all()
+    post_list = mypost.filter(Q(author__username=request.user.username)) # 내가 쓴글만
+
+    # 페이징처리
+    paginator = Paginator(post_list, 10)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+
+    context = {'post_list': page_obj, 'page': page}  # page, kw, so가 추가되었다.
+
+    return render(request, 'community/mypost.html', context)
