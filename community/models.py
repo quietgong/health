@@ -11,7 +11,7 @@ class Post(models.Model):
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
     voter = models.ManyToManyField(User, blank=True, related_name='Community_voter') # voter 추가
-    upload_files = models.FileField(null=True, blank=True, verbose_name='파일')
+    upload_files = models.ImageField(null=True, blank=True, verbose_name='파일')
     filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
     hits = models.PositiveIntegerField(default=0)
 

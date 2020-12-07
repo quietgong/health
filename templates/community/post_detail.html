@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{{post.update_counter}}
 <div class="container">
     {% if messages %}
     <div class="alert alert-danger my-3" role="alert">
@@ -17,7 +17,7 @@
                 <div class="blog_details">
                     <div class="feature-img">
                         {% if post.upload_files %}
-                        <img src = "{{post.upload_files.url}}" width="50%", height="50%">
+                        <img src = "{{post.upload_files.url}}" alt="", width="50%", height="50%">
                         {% endif %}
                     </div>
                     <h2>{{post.subject}}</h2>

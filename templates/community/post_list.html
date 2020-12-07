@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 
-  <div class="container my-3">
+<div class="container my-3">
     <div class="row justify-content-between my-3">
         <div class="col-6">
             <select class="col-6 form-control so">
@@ -27,6 +27,7 @@
             <th class="text-center">제목</th>
             <th>글쓴이</th>
             <th>작성일시</th>
+            <th>조회수</th>
         </tr>
         </thead>
         <tbody>
@@ -40,7 +41,9 @@
 
             <td class="text-center">
                 <!-- 제목 표시 -->
-                <a href="{% url 'community:detail' post.id %}">{{ post.subject }}</a>
+                <a href="{% url 'community:detail' post.id %}">{{ post.subject }}{% if post.upload_files %}
+                                <img class="card-img rounded-0" src = "{{post.upload_files.url}}">
+                                {% endif %}</a>
                 {% if post.answer_set.count > 0 %}
                 <span class="text-danger small ml-2">[{{post.answer_set.count}}]</span>
                 {% endif %}
@@ -50,6 +53,7 @@
                 {{ post.author.username }}</td>
             <!-- 작성일지 표시 -->
             <td class="text-center">{{ post.create_date }}</td>
+            <td class="text-center">{{ post.hits }}</td>
         </tr>
         {% endfor %}
         {% else %}
@@ -59,7 +63,7 @@
         {% endif %}
         </tbody>
     </table>
-<a href="{% url 'community:mypost' %}" class="btn btn-sm btn-outline-secondary pull-right">내 글보기</a>
+    <a href="{% url 'community:mypost' %}" class="btn btn-sm btn-outline-secondary pull-right">내 글보기</a>
     <!-- 페이징처리 시작 -->
     <ul class="pagination justify-content-center">
         <!-- 이전페이지 -->

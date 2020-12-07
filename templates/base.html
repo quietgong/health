@@ -36,7 +36,6 @@
 {% include 'footer.html' %}
 </body>
 <!-- Script here -->
-{% block script %}
 <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -51,5 +50,6 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+{% block script %}
 {% endblock %}
 </html>
