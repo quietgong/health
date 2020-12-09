@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load workout_filter %}
+{% load static %}
+{% block content %}
+<section id="services" class="services section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <header class="section-header">
+      <h3>운동 목록</h3>
+      <p>자신에게 맞는 운동을 찾아보세요.</p>
+    </header>
+   <div class="container my-3">
+    <div class="row justify-content-between my-3">
+        <div class="col-5">
+            <select class="form-control so">
+                <option value="recent" {% if so == 'recent' %}selected{% endif %}>최신순</option>
+                <option value="recent" {% if so == 'popular' %}selected{% endif %}>인기순</option>
+                <option value="recommend" {% if so == 'recommend' %}selected{% endif %}>추천순</option>
+                <option value="history" {% if so == 'history' %}selected{% endif %}>과거순</option>
+            </select>
+        </div>
+        <div class="col-5 input-group">
+            <input type="text" class="form-control kw" value="{{kw|default_if_none:''}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+            </div>
+        </div>
+    </div>
+    <div class="button-group-area mt-10">
+        <a href="{% url 'workout:post_create' %}" class="genric-btn primary-border e-large">글쓰기<span class="lnr lnr-arrow-right"></span></a>
+    </div>
+
+    {% for post in post_list %}
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="blog_left_sidebar">
+                        <article class="blog_item">
+                            <div class="blog_item_img">
+                                {% if post.upload_files %}
+                                <a href="{% url 'workout:detail' post.id %}">
+                                <img class="card-img rounded-0" src = "{{post.upload_files.url}}"></a>
+                                {% endif %}
+                            </div>
+                            <div class="blog_details">
+                                <ul>
+                                    <li><i class="fa fa-user"></i> 작성자 : {{post.author.username}}</li>
+                                    <li><i class="fa fa-comments"></i> 댓글수 : {{post.answer_set.count}}</li>
+                                    <li><i class="fa fa-thumbs-up"></i> 추천수 : {{post.voter.all.count}}</li>
+                                    <li><i class="fa fa-table"></i> 작성일시 : {{post.create_date}}</li>
+                                    <li><i class="fa fa-eye"></i>조회수 : {{post.hits}}</li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+
+      <!-- 페이징처리 시작 -->
+      <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if post_list.has_previous %}
+        <li class="page-item">
+          <a class="page-link" data-page="{{post_list.previous_page_number}}" href="#">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in post_list.paginator.page_range %}
+        {% if page_number >= post_list.number|add:-5 and page_number <= post_list.number|add:5 %}
+        {% if page_number == post_list.number %}
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" data-page="{{page_number}}" href="#">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a class="page-link" data-page="{{page_number}}" href="#">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if post_list.has_next %}
+        <li class="page-item">
+          <a class="page-link" data-page="{{post_list.next_page_number}}" href="#">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+      </ul>
+      <!-- 페이징처리 끝 -->
+      <div class="button-group-area mt-10">
+        <a href="{% url 'workout:post_create' %}" class="genric-btn primary-border circle">글쓰기<span class="lnr lnr-arrow-right"></span></a>
+      </div>
+    </div>
+    <form id="searchForm" method="get" action="{% url 'workout:list' %}">
+      <input type="hidden" id="kw" name="kw" value="{{kw|default_if_none:''}}">
+      <input type="hidden" id="page" name="page" value="{{page}}">
+      <input type="hidden" id="so" name="so" value="{{so}}">
+    </form>
+    {% endblock %}
+
+    {% block script %}
+    <script type='text/javascript'>
+$(document).ready(function(){
+    $(".page-link").on('click', function() {
+        $("#page").val($(this).data("page"));
+        $("#searchForm").submit();
+    });
+
+    $("#btn_search").on('click', function() {
+        $("#kw").val($(".kw").val());
+        $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        $("#searchForm").submit();
+    });
+
+    $(".so").on('change', function() {
+        $("#so").val($(this).val());
+        $("#page").val(1);
+        $("#searchForm").submit();
+    });
+});
+</script>
+    {% endblock %}
+    <!--    <div class="row">-->
+
+    <!--      <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #fceef3;"><i class="ion-ios-analytics-outline" style="color: #ff689b;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Lorem Ipsum</a></h4>-->
+    <!--          <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #fff0da;"><i class="ion-ios-bookmarks-outline" style="color: #e98e06;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Dolor Sitema</a></h4>-->
+    <!--          <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #e6fdfc;"><i class="ion-ios-paper-outline" style="color: #3fcdc7;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Sed ut perspiciatis</a></h4>-->
+    <!--          <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #fceef3;"><i class="ion-ios-analytics-outline" style="color: #ff689b;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Lorem Ipsum</a></h4>-->
+    <!--          <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #fff0da;"><i class="ion-ios-bookmarks-outline" style="color: #e98e06;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Dolor Sitema</a></h4>-->
+    <!--          <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #e6fdfc;"><i class="ion-ios-paper-outline" style="color: #3fcdc7;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Sed ut perspiciatis</a></h4>-->
+    <!--          <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-md-6 col-lg-4 wow" data-aos="zoom-in" data-aos-delay="100">-->
+    <!--        <div class="box">-->
+    <!--          <div class="icon" style="background: #eafde7;"><i class="ion-ios-speedometer-outline" style="color:#41cf2e;"></i></div>-->
+    <!--          <h4 class="title"><a href="{% static '">Magni Dolores</a></h4>-->
+    <!--          <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200"">-->
+    <!--      <div class=" box">-->
+    <!--        <div class="icon" style="background: #e1eeff;"><i class="ion-ios-world-outline" style="color: #2282ff;"></i></div>-->
+    <!--        <h4 class="title"><a href="{% static '">Nemo Enim</a></h4>-->
+    <!--        <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--    <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">-->
+    <!--      <div class="box">-->
+    <!--        <div class="icon" style="background: #ecebff;"><i class="ion-ios-clock-outline" style="color: #8660fe;"></i></div>-->
+    <!--        <h4 class="title"><a href="{% static '">Eiusmod Tempor</a></h4>-->
+    <!--        <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!--  </div>-->
+
+    <!--  </div>-->
+    <!--  &lt;!&ndash; Top button &ndash;&gt;-->
+    <!--  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>-->
+    <!--  &lt;!&ndash; End Top button &ndash;&gt;-->
+    <!--</section>&lt;!&ndash; End Services Section &ndash;&gt;-->
+
+    <!---->

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{{post.update_counter}}
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 posts-list">
+            <!-- single-post 시작 -->
+            <div class="single-post">
+                <div class="blog_details">
+
+                    <h2>{{post.subject}}</h2>
+                    <ul class="blog-info-link mt-3 mb-4">
+                        <li><i class="fa fa-user"></i>{{post.author.username}}</li>
+                        <li><i class="fa fa-table"></i>
+                            {% if post.modify_date %}
+                            (수정됨) {{post.modify_date}}
+                            {% else %}
+                            {{post.create_date}}
+                            {% endif %}
+                        </li>
+                        <li><i class="fa fa-thumbs-up"></i>{{post.voter.count}}</li>
+                    </ul>
+
+                    <h4 class="mb-20 content-font">
+                        <iframe width="560" height="315" src="{{post.video_url}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        {{post.content}}
+                    </h4>
+                    {% if request.user == post.author %}
+                    <a href="{% url 'workout:post_modify' post.id %}"
+                       class="btn btn-sm btn-outline-secondary">수정</a>
+                    <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                       data-uri = "{% url 'workout:post_delete' post.id %}">삭제</a>
+                    {% else %}
+                    {% if request.user in post.voter.all %}
+                    <a href="{% url 'workout:vote_post' post.id  %}"
+                       class="btn btn-sm btn-outline-secondary recommend">추천 취소</a>
+                    {% else %}
+                    <a href="{% url 'workout:vote_post' post.id  %}"
+                       class="btn btn-sm btn-outline-secondary recommend">추천</a>
+                    {% endif %}
+                    {% endif %}
+                    <a href="{% url 'workout:list' %}" class="btn btn-sm btn-outline-secondary pull-right">목록</a>
+                </div>
+            </div>
+            <!--comments-area 시작 -->
+            <div class="comments-area">
+                <h4>[댓글 {{post.comment_set.count}}개가 있어요]</h4>
+                <div class="comment-list">
+                    {% for comment in post.comment_set.all %}
+                    <a name="comment_{{comment.id}}"></a>
+                    <div class="single-comment justify-content-between d-flex">
+                        <div class="user justify-content-between d-flex">
+                            <div class="desc">
+                                <p class="comment">{{comment.content}}</p>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <h5>{{comment.author.username}}</h5>
+                                        <p class="date">
+                                            {% if comment.modify_date %}
+                                            (수정됨) {{comment.modify_date}}
+                                            {% else %}
+                                            {{comment.create_date}}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="reply-btn">
+                                        <a href="{% url 'workout:comment_create' comment.id  %}" class="btn-reply text-uppercase">답글</a>
+                                    </div>
+                                </div>
+                                {% if request.user == comment.author %}
+                                <a href="{% url 'workout:comment_modify' comment.id %}"
+                                   class="btn btn-sm btn-outline-secondary">수정</a>
+                                <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                                   data-uri = "{% url 'workout:comment_delete' comment.id %}">삭제</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% for comment in comment.comment_set.all %}
+                    <a name="comment_{{comment.id}}"></a>
+                    <p class="exert">&nbsp;&nbsp;<i class="fa fa-reply fa-rotate-180"></i>{{comment.content}}{{comment.author.username}}
+                        {% if comment.modify_date %}
+                        (수정됨)  {{comment.modify_date}}
+                        {% else %}
+                        {{comment.create_date}}
+                        {% endif %}
+                        {% if request.user == comment.author %}
+                        <a href="{% url 'workout:comment_modify' comment.id  %}" class="small">수정</a>,
+                        <a href="#" class="small delete"
+                           data-uri="{% url 'workout:comment_delete' comment.id  %}">삭제</a>
+                        {% endif %}
+                        {% endfor %}
+                        {%endfor%}
+                    </p>
+                </div>
+            </div>
+            <!-- comment-form 시작 -->
+            <div class="comment-form">
+                <h4>댓글 작성하기</h4>
+                <form class="form-contact comment_form" method="post" action="{% url 'workout:comment_create' post.id %}"
+                      id="commentForm">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for field in form %}
+                        {% if field.errors %}
+                        <strong>{{field.label}}</strong>
+                        {{field.errors}}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                              <textarea {% if not user.is_authenticated %}disabled{% endif %}
+                                        class="form-control w-100" name="content" id="content" cols="30" rows="10"
+                                        placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">완료</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function(){
+    $(".delete").on('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
+{% endblock %}

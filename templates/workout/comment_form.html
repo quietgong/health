@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="comment-form">
+        <form method="post" class="form-contact comment_form" id="commentForm">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="content">내용</label>
+                        <textarea class="form-control" name="content" id="content" placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."
+                                  cols="30" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+                    </div>
+                    <button type="submit" class="button button-contactForm btn_1 boxed-btn">완료</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
