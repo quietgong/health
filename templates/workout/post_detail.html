@@ -1,31 +1,33 @@
 {% extends 'base.html' %}
 {{post.update_counter}}
 {% block content %}
-
+    <div style="background-color: #000000;">
+                        <iframe width="60%" height="580" src="{{post.video_url}}" frameborder="0" allow="accelerometer; autoplay;
+                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left:24%;"></iframe>
+    </div>
 <div class="container">
 
     <div class="row">
         <div class="col-12 posts-list">
             <!-- single-post 시작 -->
             <div class="single-post">
-                <div class="blog_details">
+                <div class="blog_details" >
 
-                    <h2>{{post.subject}}</h2>
-                    <ul class="blog-info-link mt-3 mb-4">
-                        <li><i class="fa fa-user"></i>{{post.author.username}}</li>
-                        <li><i class="fa fa-table"></i>
-                            {% if post.modify_date %}
+                     <h4 class="mb-20 content-font" >
+
+                        <h1 > <hr style="color:#00498c; border: solid 7px; width:90px;float:left;">
+                            <br>{{post.subject}}</h1>
+                        <p style="margin-top:-15px; padding-left:10px;">by {{post.author.username}}<i class="fa fa-user"></i> |
+                            <i class="fa fa-table"></i>
+                           {% if post.modify_date %}
                             (수정됨) {{post.modify_date}}
                             {% else %}
                             {{post.create_date}}
                             {% endif %}
-                        </li>
-                        <li><i class="fa fa-thumbs-up"></i>{{post.voter.count}}</li>
-                    </ul>
+                         </p>
+                            <p style="margin-top:-20px; padding-left:10px;">추천수<i class="fa fa-thumbs-up">{{post.voter.count}}</i></p>
+                           <h4 style="padding-left:10px;">{{post.content}}</h4>
 
-                    <h4 class="mb-20 content-font">
-                        <iframe width="560" height="315" src="{{post.video_url}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        {{post.content}}
                     </h4>
                     {% if request.user == post.author %}
                     <a href="{% url 'workout:post_modify' post.id %}"
@@ -37,16 +39,44 @@
                     <a href="{% url 'workout:vote_post' post.id  %}"
                        class="btn btn-sm btn-outline-secondary recommend">추천 취소</a>
                     {% else %}
-                    <a href="{% url 'workout:vote_post' post.id  %}"
-                       class="btn btn-sm btn-outline-secondary recommend">추천</a>
+                    <a shref="{% url 'workout:vote_post' post.id  %}"
+                       class="btn btn-sm btn-outline-secondary recommend" >추천</a>
                     {% endif %}
                     {% endif %}
-                    <a href="{% url 'workout:list' %}" class="btn btn-sm btn-outline-secondary pull-right">목록</a>
+                    <a href="{% url 'workout:list' %}" class="btn btn-sm btn-outline-secondary pull-right">←back to</a>
                 </div>
+            </div>
+                        <!-- comment-form 시작 -->
+            <div class="comment-form">
+                <hr>
+                <h4>Leave a Comment:</h4>
+                <form class="form-contact comment_form" method="post" action="{% url 'workout:comment_create' post.id %}"
+                      id="commentForm">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for field in form %}
+                        {% if field.errors %}
+                        <strong>{{field.label}}</strong>
+                        {{field.errors}}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                              <textarea class="form-control" rows="3"{% if not user.is_authenticated %}disabled{% endif %}
+                                        class="form-control w-100" name="content" id="content" cols="30" rows="10"
+                                        placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
             <!--comments-area 시작 -->
             <div class="comments-area">
-                <h4>[댓글 {{post.comment_set.count}}개가 있어요]</h4>
+                <h4>{{post.comment_set.count}} Comments on Workout</h4>
+                <hr style="border: solid 2px; color:#00498c; margin-top:-10px;">
                 <div class="comment-list">
                     {% for comment in post.comment_set.all %}
                     <a name="comment_{{comment.id}}"></a>
@@ -95,32 +125,6 @@
                         {%endfor%}
                     </p>
                 </div>
-            </div>
-            <!-- comment-form 시작 -->
-            <div class="comment-form">
-                <h4>댓글 작성하기</h4>
-                <form class="form-contact comment_form" method="post" action="{% url 'workout:comment_create' post.id %}"
-                      id="commentForm">
-                    {% csrf_token %}
-                    {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        {% for field in form %}
-                        {% if field.errors %}
-                        <strong>{{field.label}}</strong>
-                        {{field.errors}}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <div class="form-group">
-                              <textarea {% if not user.is_authenticated %}disabled{% endif %}
-                                        class="form-control w-100" name="content" id="content" cols="30" rows="10"
-                                        placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">완료</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
