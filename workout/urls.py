@@ -7,6 +7,7 @@ app_name = 'workout'
 urlpatterns = [
 
     path('<int:post_id>/', base_views.detail, name='detail'),
+    path('myworkout/', base_views.myworkout, name='myworkout'),
     # post_views.py
     path('post/list/', base_views.list, name='list'),
     path('post/create/', post_views.post_create, name='post_create'),
@@ -21,6 +22,6 @@ urlpatterns = [
     # vote_views.py
     path('vote/post/<int:post_id>/', vote_views.vote_post, name='vote_post'),
 
-# 파일업로드 추가
+    # 파일업로드 추가
     path('download/<int:pk>', post_views.post_download_view, name="post_download"),
 ]

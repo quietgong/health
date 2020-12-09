@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load workout_filter %}
+{% load static %}
+{% block content %}
+<section id="services" class="services section-bg">
+
+    <div class="container" data-aos="fade-up">
+        <header class="section-header">
+            <h3>내가 찜한 운동 목록</h3>
+            <p>숙련도를 쌓아가세요.</p>
+        </header>
+
+        <div class="container">
+            <div class="row">
+                {% for post in post_list %}
+                <div class="col-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="box">
+                        <div class="blog_left_sidebar">
+                            <article class="blog_item">
+                                <div class="blog_item_img">
+                                    {% if post.upload_files %}
+                                    <a href="{% url 'workout:detail' post.id %}">
+                                        <img class="card-img rounded-0" src = "{{post.upload_files.url}}"></a>
+                                    {% endif %}
+                                </div>
+                                <div class="blog_details">
+                                    <ul>
+                                        <li><i class="fa fa-comments"></i> 댓글수 : {{post.answer_set.count}}</li>
+                                        <li><i class="fa fa-thumbs-up"></i> 추천수 : {{post.voter.all.count}}</li>
+                                        <li><i class="fa fa-table"></i> 작성일시 : {{post.create_date}}</li>
+                                        <li><i class="fa fa-eye"></i>조회수 : {{post.hits}}</li>
+                                    </ul>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

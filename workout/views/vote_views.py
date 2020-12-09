@@ -7,7 +7,7 @@ from ..models import Post
 @login_required(login_url='accounts:login')
 def vote_post(request, post_id):
     """
-    community 질문추천등록
+    workout 질문추천등록
     """
     post = get_object_or_404(Post, pk=post_id)
     if request.user == post.author:
@@ -17,4 +17,4 @@ def vote_post(request, post_id):
             post.voter.remove(request.user)
         else:
             post.voter.add(request.user)
-    return redirect('community:detail', post_id=post.id)
+    return redirect('workout:detail', post_id=post.id)
