@@ -26,9 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main.apps.MainConfig',
     'community.apps.CommunityConfig',
     'workout.apps.WorkoutConfig',
+    'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
 ]
 

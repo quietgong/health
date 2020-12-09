@@ -2,15 +2,15 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.views.static import serve
-from django.contrib.auth import views as auth_views
 
 from main import views
 
 urlpatterns = [
                   path('', views.index, name='index'),
-                  path('about', views.intro, name='intro'),
+                  path('about/', views.intro, name='intro'),
                   path('admin/', admin.site.urls),
                   path('accounts/', include('accounts.urls')),
                   path('community/', include('community.urls')),
