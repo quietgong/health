@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'intro.html')
+    return render(request, 'main/index.html')
 
 
 def intro(request):
-    return render(request, 'about.html')
+    return render(request, 'main/about.html')
