@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 {{post.update_counter}}
-<div class="container">
+
+
+<!--Content Section-->
+ <section id="team" style="background-color: #eaebef";>
+            <div class="single-post" >
+    <div class="container" style="background-color: #ffffff; margin-top:-35px; margin-bottom:-35px;" >
+        <div class="row">
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-12">
     {% if messages %}
     <div class="alert alert-danger my-3" role="alert">
         {% for message in messages %}
@@ -13,34 +21,37 @@
     <div class="row">
         <div class="col-12 posts-list">
             <!-- single-post 시작 -->
-            <div class="single-post">
-                <div class="blog_details">
-                    <div class="feature-img">
-                        {% if post.upload_files %}
-                        <img src = "{{post.upload_files.url}}" alt="", width="50%", height="50%">
-                        {% endif %}
-                    </div>
-                    <h2>{{post.subject}}</h2>
+                <div class="blog_details" >
+                    <h1 style="margin-top:20px; margin-bottom:-9px; ";>Community</h1>
+                    <hr style="border: solid 2px; color:#00498c">
+                    <h2 style="margin-top:30px;">{{post.subject}}</h2>
+                    <hr>
                     <ul class="blog-info-link mt-3 mb-4">
-                        <li><i class="fa fa-user"></i>{{post.author.username}}</li>
-                        <li><i class="fa fa-table"></i>
+                        <li><i class="fa fa-user"></i>{{post.author.username}}
+                        <i class="fa fa-table"></i>
                             {% if post.modify_date %}
                             (수정됨) {{post.modify_date}}
                             {% else %}
                             {{post.create_date}}
                             {% endif %}
-                        </li>
-                        <li><i class="fa fa-thumbs-up"></i>{{post.voter.count}}</li>
+                       <i class="fa fa-thumbs-up"></i>{{post.voter.count}}</li>
                     </ul>
+                    <hr>
+                    <div class="feature-img" >
+                        {% if post.upload_files %}
+                        <img src = "{{post.upload_files.url}}" alt="", width="50%", height="50%">
+                        {% endif %}
+                    </div>
+
+                    <h5 class="mb-20 content-font" style="margin-top:10px;">
+                        {{post.content}}
+                    </h5>
                     {% if post.upload_files %}
-                    <div>
+                    <div style="padding-bottom:10px";>
                         <i class="fa fa-download fa-2x"></i>
                         <a href="{% url 'community:post_download' post.id %}" >&nbsp{{ post.filename}}</a>
                     </div>
                     {% endif %}
-                    <h4 class="mb-20 content-font">
-                        {{post.content}}
-                    </h4>
                     {% if request.user == post.author %}
                     <a href="{% url 'community:post_modify' post.id %}"
                        class="btn btn-sm btn-outline-secondary">수정</a>
@@ -57,20 +68,54 @@
                     {% endif %}
                     <a href="{% url 'community:list' %}" class="btn btn-sm btn-outline-secondary pull-right">목록</a>
                 </div>
+
+            </div>
+</div>
+
+</div>
+
+<div class="container">
+                <!-- comment-form 시작 -->
+            <div class="comment-form">
+                <hr>
+                <h4>Leave a Comment:</h4>
+                <form class="form-contact comment_form" method="post" action="{% url 'community:answer_create' post.id %}"
+                      id="commentForm">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for field in form %}
+                        {% if field.errors %}
+                        <strong>{{field.label}}</strong>
+                        {{field.errors}}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                              <textarea class="form-control" rows="3"{% if not user.is_authenticated %}disabled{% endif %}
+                                        class="form-control w-100" name="content" id="content" cols="30" rows="10"
+                                        placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
             <!--comments-area 시작 -->
-            <div class="comments-area">
-                <h4>[댓글 {{post.answer_set.count}}개가 있어요]</h4>
-                <div class="comment-list">
+            <div class="comments-area" >
+                <h4>{{post.answer_set.count}} Comments</h4>
+                <hr style="border: solid 2px; color:#00498c; margin-top:-10px;">
+                <div class="comment-list" >
                     {% for answer in post.answer_set.all %}
                     <a name="answer_{{answer.id}}"></a>
                     <div class="single-comment justify-content-between d-flex">
                         <div class="user justify-content-between d-flex">
                             <div class="desc">
+                                <h5>{{answer.author.username}}</h5>
                                 <p class="comment">{{answer.content}}</p>
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
-                                        <h5>{{answer.author.username}}</h5>
                                         <p class="date">
                                             {% if answer.modify_date %}
                                             (수정됨) {{answer.modify_date}}
@@ -92,6 +137,7 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                     {% for comment in answer.comment_set.all %}
                     <a name="answer_{{comment.id}}"></a>
                     <p class="exert">&nbsp;&nbsp;<i class="fa fa-reply fa-rotate-180"></i>{{comment.content}}{{comment.author.username}}
@@ -106,38 +152,16 @@
                            data-uri="{% url 'community:comment_delete' comment.id  %}">삭제</a>
                         {% endif %}
                         {% endfor %}
+                <hr>
                         {%endfor%}
                     </p>
                 </div>
             </div>
-            <!-- comment-form 시작 -->
-            <div class="comment-form">
-                <h4>댓글 작성하기</h4>
-                <form class="form-contact comment_form" method="post" action="{% url 'community:answer_create' post.id %}"
-                      id="commentForm">
-                    {% csrf_token %}
-                    {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        {% for field in form %}
-                        {% if field.errors %}
-                        <strong>{{field.label}}</strong>
-                        {{field.errors}}
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <div class="form-group">
-                              <textarea {% if not user.is_authenticated %}disabled{% endif %}
-                                        class="form-control w-100" name="content" id="content" cols="30" rows="10"
-                                        placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">완료</button>
-                    </div>
-                </form>
-            </div>
+
+</section>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}
