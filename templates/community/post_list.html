@@ -42,7 +42,7 @@
             <td class="text-center">
                 <!-- 제목 표시 -->
                 <a href="{% url 'community:detail' post.id %}">{{ post.subject }}{% if post.upload_files %}
-                                <img class="card-img rounded-0" src = "{{post.upload_files.url}}">
+                                <img class="card-img rounded-0" src = "adf">
                                 {% endif %}</a>
                 {% if post.answer_set.count > 0 %}
                 <span class="text-danger small ml-2">[{{post.answer_set.count}}]</span>
