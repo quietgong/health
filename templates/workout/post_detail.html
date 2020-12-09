@@ -1,57 +1,33 @@
 {% extends 'base.html' %}
 {{post.update_counter}}
 {% block content %}
-<<<<<<< HEAD
 <div style="background-color: #000000;">
     <iframe width="60%" height="580" src="{{post.video_url}}" frameborder="0" allow="accelerometer; autoplay;
                         clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left:24%;"></iframe>
 </div>
-=======
-    <div style="background-color: #000000;">
-                        <iframe width="60%" height="580" src="{{post.video_url}}" frameborder="0" allow="accelerometer; autoplay;
-                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left:24%;"></iframe>
-    </div>
->>>>>>> 9920e576b08e09c85a10eb05d20d0eaaecc287af
 <div class="container">
 
     <div class="row">
         <div class="col-12 posts-list">
+
             <!-- single-post 시작 -->
             <div class="single-post">
-                <div class="blog_details" >
-<<<<<<< HEAD
 
+                <div class="blog_details" >
                     <h4 class="mb-20 content-font" >
                         <hr style="margin-bottom:-50px; color:#00498c; border: solid 7px; width:90px;float:left; ">
                         <h1 style="margin-top:-20px; color:#000000;"><br><strong>{{post.subject}}</strong></h1>
                         <p style="margin-top:-15px; padding-left:10px; float:right">
                             <i class="fa fa-table"></i>
                             {% if post.modify_date %}
-=======
-
-                     <h4 class="mb-20 content-font" >
-
-                        <h1 > <hr style="color:#00498c; border: solid 7px; width:90px;float:left;">
-                            <br>{{post.subject}}</h1>
-                        <p style="margin-top:-15px; padding-left:10px;">by {{post.author.username}}<i class="fa fa-user"></i> |
-                            <i class="fa fa-table"></i>
-                           {% if post.modify_date %}
->>>>>>> 9920e576b08e09c85a10eb05d20d0eaaecc287af
                             (수정됨) {{post.modify_date}}
                             {% else %}
                             {{post.create_date}}
                             {% endif %}
-<<<<<<< HEAD
                             <br><i class="fa fa-thumbs-up"> {{post.voter.count}}</i></p>
                         <br>
                         <h4 style="padding-left:10px;">{{post.content}}</h4>
                         <br>
-=======
-                         </p>
-                            <p style="margin-top:-20px; padding-left:10px;">추천수<i class="fa fa-thumbs-up">{{post.voter.count}}</i></p>
-                           <h4 style="padding-left:10px;">{{post.content}}</h4>
-
->>>>>>> 9920e576b08e09c85a10eb05d20d0eaaecc287af
                     </h4>
                     {% if request.user == post.author %}
                     <a href="{% url 'workout:post_modify' post.id %}"
@@ -63,73 +39,19 @@
                     <a href="{% url 'workout:vote_post' post.id  %}"
                        class="btn btn-sm btn-outline-secondary recommend">추천 취소</a>
                     {% else %}
-                    <a shref="{% url 'workout:vote_post' post.id  %}"
-                       class="btn btn-sm btn-outline-secondary recommend" >추천</a>
+                    <a href="{% url 'workout:vote_post' post.id  %}"
+                       class="btn btn-sm btn-outline-secondary recommend">추천</a>
                     {% endif %}
                     {% endif %}
                     <a href="{% url 'workout:list' %}" class="btn btn-sm btn-outline-secondary pull-right">←back to</a>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="container">
-                <!-- comment-form 시작 -->
-                <div class="comment-form">
-                    <hr>
-                    <h4>Leave a Comment:</h4>
-                    <form class="form-contact comment_form" method="post" action="{% url 'workout:answer_create' post.id %}"
-                          id="commentForm">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                        <div class="alert alert-danger" role="alert">
-                            {% for field in form %}
-                            {% if field.errors %}
-                            <strong>{{field.label}}</strong>
-                            {{field.errors}}
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                        <div class="form-group">
-                              <textarea class="form-control" rows="3"{% if not user.is_authenticated %}disabled{% endif %}
-                                        class="form-control w-100" name="content" id="content" cols="30" rows="10"
-                                        placeholder="비방 또는 욕설이 포함된 내용은 관리자에 의해 삭제 될 수 있습니다."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <!--comments-area 시작 -->
-                <div class="comments-area" >
-                    <h4>{{post.answer_set.count}} Comments</h4>
-                    <hr style="border: solid 2px; color:#00498c; margin-top:-10px;">
-                    <div class="comment-list" >
-                        {% for answer in post.answer_set.all %}
-                        <a name="answer_{{answer.id}}"></a>
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="desc">
-                                    <h5>{{answer.author.username}}</h5>
-                                    <p class="comment">{{answer.content}}</p>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <p class="date">
-                                                {% if answer.modify_date %}
-                                                (수정됨) {{answer.modify_date}}
-                                                {% else %}
-                                                {{answer.create_date}}
-                                                {% endif %}
-                                            </p>
-                                        </div>
-                                        <div class="reply-btn">
-                                            <a href="{% url 'workout:comment_create' answer.id  %}" class="btn-reply text-uppercase">답글</a>
-                                        </div>
-=======
-                        <!-- comment-form 시작 -->
+
+            <!-- comment-form 시작 -->
             <div class="comment-form">
                 <hr>
                 <h4>Leave a Comment:</h4>
-                <form class="form-contact comment_form" method="post" action="{% url 'workout:comment_create' post.id %}"
+                <form class="form-contact comment_form" method="post" action="{% url 'workout:answer_create' post.id %}"
                       id="commentForm">
                     {% csrf_token %}
                     {% if form.errors %}
@@ -153,59 +75,58 @@
                 </form>
             </div>
             <!--comments-area 시작 -->
-            <div class="comments-area">
-                <h4>{{post.comment_set.count}} Comments on Workout</h4>
+            <div class="comments-area" >
+                <h4>{{post.answer_set.count}} Comments</h4>
                 <hr style="border: solid 2px; color:#00498c; margin-top:-10px;">
-                <div class="comment-list">
-                    {% for comment in post.comment_set.all %}
-                    <a name="comment_{{comment.id}}"></a>
+                <div class="comment-list" >
+                    {% for answer in post.answer_set.all %}
+                    <a name="answer_{{answer.id}}"></a>
                     <div class="single-comment justify-content-between d-flex">
                         <div class="user justify-content-between d-flex">
                             <div class="desc">
-                                <p class="comment">{{comment.content}}</p>
+                                <h5>{{answer.author.username}}</h5>
+                                <p class="comment">{{answer.content}}</p>
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
-                                        <h5>{{comment.author.username}}</h5>
                                         <p class="date">
-                                            {% if comment.modify_date %}
-                                            (수정됨) {{comment.modify_date}}
+                                            {% if answer.modify_date %}
+                                            (수정됨) {{answer.modify_date}}
                                             {% else %}
-                                            {{comment.create_date}}
+                                            {{answer.create_date}}
                                             {% endif %}
                                         </p>
                                     </div>
                                     <div class="reply-btn">
-                                        <a href="{% url 'workout:comment_create' comment.id  %}" class="btn-reply text-uppercase">답글</a>
->>>>>>> 9920e576b08e09c85a10eb05d20d0eaaecc287af
+                                        <a href="{% url 'workout:comment_create' answer.id  %}" class="btn-reply text-uppercase">답글</a>
                                     </div>
-                                    {% if request.user == answer.author %}
-                                    <a href="{% url 'workout:answer_modify' answer.id %}"
-                                       class="btn btn-sm btn-outline-secondary">수정</a>
-                                    <a href="#" class="delete btn btn-sm btn-outline-secondary"
-                                       data-uri = "{% url 'workout:answer_delete' answer.id %}">삭제</a>
-                                    {% endif %}
                                 </div>
+                                {% if request.user == answer.author %}
+                                <a href="{% url 'workout:answer_modify' answer.id %}"
+                                   class="btn btn-sm btn-outline-secondary">수정</a>
+                                <a href="#" class="delete btn btn-sm btn-outline-secondary"
+                                   data-uri = "{% url 'workout:answer_delete' answer.id %}">삭제</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                    {% for comment in answer.comment_set.all %}
-                    <a name="answer_{{comment.id}}"></a>
-                    <p class="exert">&nbsp;&nbsp;<i class="fa fa-reply fa-rotate-180"></i>{{comment.content}}{{comment.author.username}}
-                        {% if comment.modify_date %}
-                        (수정됨)  {{comment.modify_date}}
-                        {% else %}
-                        {{comment.create_date}}
-                        {% endif %}
-                        {% if request.user == comment.author %}
-                        <a href="{% url 'workout:comment_modify' comment.id  %}" class="small">수정</a>,
-                        <a href="#" class="small delete"
-                           data-uri="{% url 'workout:comment_delete' comment.id  %}">삭제</a>
-                        {% endif %}
-                        {% endfor %}
-                    <hr>
-                    {%endfor%}
-                    </p>
                 </div>
+                {% for comment in answer.comment_set.all %}
+                <a name="answer_{{comment.id}}"></a>
+                <p class="exert">&nbsp;&nbsp;<i class="fa fa-reply fa-rotate-180"></i>{{comment.content}}{{comment.author.username}}
+                    {% if comment.modify_date %}
+                    (수정됨)  {{comment.modify_date}}
+                    {% else %}
+                    {{comment.create_date}}
+                    {% endif %}
+                    {% if request.user == comment.author %}
+                    <a href="{% url 'workout:comment_modify' comment.id  %}" class="small">수정</a>,
+                    <a href="#" class="small delete"
+                       data-uri="{% url 'workout:comment_delete' comment.id  %}">삭제</a>
+                    {% endif %}
+                    {% endfor %}
+                <hr>
+                {%endfor%}
+                </p>
             </div>
         </div>
     </div>
