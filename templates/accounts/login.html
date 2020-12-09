@@ -1,46 +1,18 @@
-<!doctype html>
-<html>
-<head>
+{% extends 'base.html' %}
 {% load static %}
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Emsys</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
-</head>
 
-<body>
-<!-- faq_area_Start -->
-<div class="faq_area login-format" >
-    <div class="container login-container">
-        <div class="row login-row">
-            <div class="col-xl-12 login-col">
-                <div class="serction_title_large mb-95 login-text">
-                    <h3>로그인</h3>
-                    {% include "form_errors_login.html" %}
-                </div>
-                <form method="post" action="{% url 'accounts:login' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{next}}"> <!-- 로그인 성공후 이동되는 URL -->
-                    <div class="mt-10">
-                        <input type="text" name="username" placeholder="ID 입력 (ex:17홍길동)" class="single-input input-id" value="{{ form.username.value|default_if_none:'' }}">
-                    </div>
-                    <div class="mt-10">
-                        <input type="password" name="password" placeholder="비밀번호 입력" class="single-input input-pwd" value="{{ form.password.value|default_if_none:'' }}">
-                    </div>
-                    <button type="submit" class="btn btn-outline-primary login-btn">로그인</button> <br>
-                </form>
-                <a href="{% url 'accounts:signup' %}" class="btn btn-outline-primary create-button">계정신청</a>
-                <a href="{% url 'reset_password' %}" class="btn btn-outline-primary find-pwd">비밀번호 찾기</a>
-            </div>
-        </div>
-    </div>
+{% block content %}
+{% include "form_errors_login.html" %}
+<link href="{% static 'assets/css/login.css' %}" rel="stylesheet">
+<div class="wrapper">
+    <form method="post" class="form-signin" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please login</h2>
+        <input type="hidden" name="next" value="{{next}}"> <!-- 로그인 성공후 이동되는 URL -->
+        <input type="text" class="form-control" name="username" placeholder="ID" required="" autofocus="" />
+        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">로그인</button> <br>
+        <a href="{% url 'reset_password' %}" class="btn btn-lg btn-primary btn-block">비밀번호 찾기</a>
+    </form>
 </div>
-</body>
-</html>
+{% endblock %}
