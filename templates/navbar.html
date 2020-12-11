@@ -4,8 +4,7 @@
     <div class="container d-flex justify-content-end">
       <div class="social-links">
         {% if user.is_authenticated %}
-        <a href="{% url 'accounts:change_password'%}" class=""><i class="">내계정({{user.username}})</i></a>
-        <a href="{% url 'accounts:logout'%}" class=""><i class="">로그아웃</i></a>
+        <a href="{% url 'accounts:logout'%}" class=""><i class="">로그아웃({{user.username}})</i></a>
         {% else %}
         <a href="{% url 'accounts:login'%}" class=""><i class="">로그인</i></a>
         <a href="{% url 'accounts:signup'%}" class=""><i class="">회원가입</i></a>
@@ -23,7 +22,16 @@
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'workout:list' %}">Workout</a></li>
           <li><a href="{% url 'community:list' %}">Community</a></li>
-          <li><a href="{% url 'intro' %}">About Us</a></li>
+          <li><a href="{% url 'intro' %}">About</a></li>
+          {% if user.is_authenticated %}
+          <li class="drop-down"><a href="#">My</a>
+            <ul>
+              <li><a href="{% url 'community:mypost' %}">Post</a></li>
+              <li><a href="{% url 'workout:myworkout' %}">Workout</a></li>
+              <li><a href="{% url 'accounts:change_password'%}">Password Change</a></li>
+            </ul>
+          </li>
+          {% endif %}
         </ul>
       </nav>
     </div>

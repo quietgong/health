@@ -23,16 +23,17 @@
                                 <h1 style="margin-top:20px; margin-bottom:-9px; ";>Community</h1>
                                 <hr style="border: solid 2px; color:#00498c">
                                 <h2 style="margin-top:30px;">{{post.subject}}</h2>
-                                <hr>
                                 <ul class="blog-info-link mt-3 mb-4">
-                                    <li><i class="fa fa-user"></i>{{post.author.username}}
-                                        <i class="fa fa-table"></i>
+                                   <i class="fa fa-user pull-right">{{post.author.username}}</i><br>
+                                        <i class="fa fa-table pull-right">
                                         {% if post.modify_date %}
                                         (수정됨) {{post.modify_date}}
                                         {% else %}
                                         {{post.create_date}}
                                         {% endif %}
-                                        <i class="fa fa-thumbs-up"></i>{{post.voter.count}}</li>
+                                        </i><br>
+                                        <i class="fa fa-thumbs-up pull-right">{{post.voter.count}}</i>
+
                                 </ul>
                                 <hr>
                                 <div class="feature-img" >
@@ -66,10 +67,8 @@
                                 {% endif %}
                                 <a href="{% url 'community:list' %}" class="btn btn-sm btn-outline-secondary pull-right">목록</a>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <div class="container">
@@ -110,7 +109,7 @@
                             <div class="single-comment justify-content-between d-flex">
                                 <div class="user justify-content-between d-flex">
                                     <div class="desc">
-                                        <h5>{{answer.author.username}}</h5>
+                                        <h5><strong>{{answer.author.username}}</strong></h5>
                                         <p class="comment">{{answer.content}}</p>
                                         <div class="d-flex justify-content-between">
                                             <div class="d-flex align-items-center">
@@ -138,7 +137,7 @@
                         </div>
                         {% for comment in answer.comment_set.all %}
                         <a name="answer_{{comment.id}}"></a>
-                        <p class="exert">&nbsp;&nbsp;<i class="fa fa-reply fa-rotate-180"></i>{{comment.content}}{{comment.author.username}}
+                        <p class="exert">&nbsp;&nbsp;<i class="fa fa-reply fa-rotate-180"></i>{{comment.content}}<strong>{{comment.author.username}}</strong>
                             {% if comment.modify_date %}
                             (수정됨)  {{comment.modify_date}}
                             {% else %}

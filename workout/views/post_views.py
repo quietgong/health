@@ -23,6 +23,7 @@ def post_create(request):
             post = form.save(commit=False)
             post.create_date = timezone.now()
             post.author = request.user
+            post.video_url = post.video_url.replace("watch?v=", "embed/")
             if request.FILES:
                 if 'upload_files' in request.FILES.keys():
                     post.filename = request.FILES['upload_files'].name

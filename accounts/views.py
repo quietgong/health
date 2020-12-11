@@ -1,5 +1,4 @@
 from django.contrib import auth
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
@@ -7,6 +6,7 @@ from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import render, redirect
 
 from accounts.forms import UserForm
+
 
 def signup(request):
     """

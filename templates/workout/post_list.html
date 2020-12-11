@@ -15,23 +15,16 @@
                 {% for post in post_list %}
                 <div class="col-6" data-aos="zoom-in" data-aos-delay="100">
                     <div class="box">
-                        <div class="blog_left_sidebar">
-                            <article class="blog_item">
-                                <div class="blog_item_img">
-                                      <p>< {{post.subject}} ></p>
-                                    {% if post.upload_files %}
-                                    <a href="{% url 'workout:detail' post.id %}">
-                                        <img class="card-img rounded-0" src = "{{post.upload_files.url}}"></a>
-                                    {% endif %}
-                                </div>
-                            </article>
-                        </div>
+                        <strong>{{post.subject}}</strong>
+                        {% if post.upload_files %}
+                        <a href="{% url 'workout:detail' post.id %}">
+                            <img class="card-img rounded-0" width="300px", height="300px" src = "{{post.upload_files.url}}"></a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
-        <a href="{% url 'workout:myworkout' %}" class="btn btn-sm btn-outline-secondary pull-right">내가 찜한 운동</a>
         <!-- 페이징처리 시작 -->
         <ul class="pagination justify-content-center">
             <!-- 이전페이지 -->

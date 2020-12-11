@@ -64,4 +64,4 @@ def comment_delete(request, comment_id):
         return redirect('community:detail', post_id=comment.answer.post.id)
     else:
         comment.delete()
-    return redirect(':detail', post_id=comment.answer.post.id)
+    return redirect('community:detail', post_id=comment.answer.post.id)

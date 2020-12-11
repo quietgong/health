@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 {% include "form_errors_signup.html" %}
 <link href="{% static 'assets/css/login.css' %}" rel="stylesheet">
@@ -11,12 +10,12 @@
         <h2 class="form-signin-heading">회원가입</h2>
         <p><i class="fa fa-check"><strong> 설명.</strong> </i></p>
         <input type="hidden" name="next" value="{{next}}"> <!-- 로그인 성공후 이동되는 URL -->
-        <input type="text" id="stdnumval" name="first_name" placeholder="학번" class="single-input input-id create-stdnum">
-                        <input type="email" id="emailval" name="email" placeholder="이메일(비밀번호 찾기용도)" class="single-input input-id create-email">
-                        <input type="password" id="pwd1" name="password1" placeholder="비밀번호" class="single-input input-pwd create-pwd">
-                        <input type="password" id="pwd2" name="password2" placeholder="비밀번호 확인" class="single-input input-pwd create-pwd2">
-                    <button type="submit" class="btn btn-outline-primary create-btn create-account-btn">신청</button>
-        
+        <input type="text" name="username" placeholder="ID" class="single-input">
+        <input type="email" id="emailval" name="email" placeholder="이메일" class="single-input">
+        <input type="text" id="stdnumval" name="first_name" placeholder="닉네임" class="single-input">
+        <input type="password" id="pwd1" name="password1" placeholder="비밀번호" class="single-input">
+        <input type="password" id="pwd2" name="password2" placeholder="비밀번호 확인" class="single-input">
+        <button type="submit" class="btn btn-outline-primary create-btn create-account-btn">가입</button>
     </form>
 </div>
 {% endblock %}
