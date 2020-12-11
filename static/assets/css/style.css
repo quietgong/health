@@ -70,7 +70,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-
 /* Prelaoder */
 #preloader {
   position: fixed;
@@ -438,6 +437,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (min-width: 992px) {
   #hero .intro-info {
     padding-top: 80px;
+    margin-top: -450px;
   }
 }
 
@@ -477,7 +477,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
   transition: 0.5s;
   color: #fff;
-  background: #1bb1dc;
+  background: #00498c;
   color: #fff;
 }
 

@@ -1,52 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'account_base.html' %}
+{% load static %}
 {% block content %}
-<div class="slider_area slider_bg_1">
-    <div class="slider_text">
-        <div class="container">
-            <div class="position_relv">
-                <div class="row">
-                    <div class="col-xl-8">
-                        <div class="title_text title_text2 ">
-                            <h3 class="c1">비밀번호 변경</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<link href="{% static 'assets/css/login.css' %}" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
-<div class="container">
-    <div class="login_container">
-        <div class="typography">
-            <br><h3>{{error}}</h3><br>
-            <p class="sample-text"><i class="fa fa-check"> 비밀번호는 최소 8자 이상이어야 합니다.</i></p>
-            <p class="sample-text"><i class="fa fa-check"> 통상적으로 자주 사용되는 비밀번호는 사용할 수 없습니다.</i></p>
-            <p class="sample-text"><i class="fa fa-check"> 숫자로만 이루어진 비밀번호는 사용할 수 없습니다.</i></p>
-        </div>
-        <form method="POST" action="{% url 'accounts:change_password' %}">
-            {% csrf_token %}
-
-            <div class="mt-10">
-                <input type="password" name="origin_password" placeholder="현재 비밀번호"
-                       onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호'" required
-                       class="single-input">
-            </div>
-            <div class="mt-10">
-                <input type="password" name="password1" placeholder="새로운 비밀번호"
-                       onfocus="this.placeholder = ''" onblur="this.placeholder = '새로운 비밀번호'" required
-                       class="single-input">
-            </div>
-            <div class="mt-10">
-                <input type="password" name="password2" placeholder="새로운 비밀번호 확인"
-                       onfocus="this.placeholder = ''" onblur="this.placeholder = '새로운 비밀번호 확인'" required
-                       class="single-input">
-            </div>
-            <div class="button-group-area mt-10">
-                <input type="submit" class="genric-btn primary-border" value="변경">
-                <hr>
-            </div>
-        </form>
-    </div>
+<div class="login">
+    <br><h3>{{error}}</h3><br>
+    <p class="sample-text"><i class="fa fa-check"> 비밀번호는 최소 8자 이상이어야 합니다.</i></p>
+    <p class="sample-text"><i class="fa fa-check"> 통상적으로 자주 사용되는 비밀번호는 사용할 수 없습니다.</i></p>
+    <p class="sample-text"><i class="fa fa-check"> 숫자로만 이루어진 비밀번호는 사용할 수 없습니다.</i></p>
+    <form method="POST" action="{% url 'accounts:change_password' %}">
+        {% csrf_token %}
+        <input type="password" name="origin_password" placeholder="현재 비밀번호"
+               onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호'" required
+               class="text">
+        <input type="password" name="password1" placeholder="새로운 비밀번호"
+               onfocus="this.placeholder = ''" onblur="this.placeholder = '새로운 비밀번호'" required
+               class="text">
+        <input type="password" name="password2" placeholder="새로운 비밀번호 확인"
+               onfocus="this.placeholder = ''" onblur="this.placeholder = '새로운 비밀번호 확인'" required
+               class="text">
+        <button type="submit" class="signin" value="변경">변경</button>
+    </form>
 </div>
 {% endblock %}

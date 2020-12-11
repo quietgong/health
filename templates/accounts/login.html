@@ -1,18 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'account_base.html' %}
 {% load static %}
-
 {% block content %}
 {% include "form_errors_login.html" %}
 <link href="{% static 'assets/css/login.css' %}" rel="stylesheet">
-<div class="wrapper">
-    <form method="post" class="form-signin" action="{% url 'accounts:login' %}">
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+<div class="login">
+    <h2 class="active"> sign in </h2>
+    <form method="post" action="{% url 'accounts:login' %}">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Please login</h2>
+         {% include 'form_errors_signup.html' %}
         <input type="hidden" name="next" value="{{next}}"> <!-- 로그인 성공후 이동되는 URL -->
-        <input type="text" class="form-control" name="username" placeholder="ID" required="" autofocus="" />
-        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
-        <button type="submit" class="btn btn-lg btn-primary btn-block">로그인</button> <br>
-        <a href="{% url 'reset_password' %}" class="btn btn-lg btn-primary btn-block">비밀번호 찾기</a>
+        <input type="text" class="text" name="username">
+        <span>username</span>
+        <br>
+        <br>
+        <input type="password" class="text" name="password">
+        <span>password</span>
+        <br>
+        <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" />
+        <button type="submit" class="signin">
+            Sign In
+        </button>
+        <br>
+        <a style="color:#ffffff; font-size:20px;" href="{% url 'accounts:signup' %}">Not member?</a>
+        <hr>
+        <a style="color:#ffffff; font-size:20px;" href="{% url 'reset_password' %}">Forgot Password?</a>
     </form>
 </div>
 {% endblock %}

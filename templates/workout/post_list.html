@@ -15,7 +15,7 @@
                 {% for post in post_list %}
                 <div class="col-6" data-aos="zoom-in" data-aos-delay="100">
                     <div class="box">
-                        <strong>{{post.subject}}</strong>
+                        <strong><a href="{% url 'workout:detail' post.id %}">{{post.subject}}</a></strong>
                         {% if post.upload_files %}
                         <a href="{% url 'workout:detail' post.id %}">
                             <img class="card-img rounded-0" width="300px", height="300px" src = "{{post.upload_files.url}}"></a>
