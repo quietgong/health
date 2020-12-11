@@ -64,7 +64,7 @@
         </ul>
         <!-- 페이징처리 끝 -->
         {% if request.user.is_staff %}
-        <a href="{% url 'workout:post_create' %}" class="genric-btn primary-border circle">글쓰기<span class="lnr lnr-arrow-right"></span></a>
+        <a href="{% url 'workout:post_create' %}" class="btn btn-md btn-outline-secondary pull-right">글쓰기<span class="lnr lnr-arrow-right"></span></a>
         {% endif %}
     </div>
     <form id="searchForm" method="get" action="{% url 'workout:list' %}">
